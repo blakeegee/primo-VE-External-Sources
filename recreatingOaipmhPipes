@@ -1,0 +1,105 @@
+Recreating OAI-PMH Pipes in Primo VE
+WSU | Blake Galbreath | blake.galbreath@wsu.edu
+
+1. Gather pipe info from PBO
+PBO Home > Publishing > Pipe List > Edit
+Jot down the details or take a screenshot.
+ 
+2. Use pipe info to create a Discovery Import Profile in VE
+Discovery > Loading External Data Sources > Discovery Import Profiles > Add New Profile
+Choose Profile Type = Discovery
+
+2A. Profile Details Tab
+Fill in required fields. They made this part really easy – so nice!
+If using OAI-PMH harvesting, the set names will auto-populate in the following step, but you need to know what they are called in the current step. Use your OAI-PMH URL with parameter “verb=ListSets” to view a list, such as: https://content.libraries.wsu.edu/oai/oai.php/request?verb=ListSets.
+...
+<setSpec>mccaw</setSpec>
+<setName>J. Elroy McCaw Memorial Film Collection</setName>
+...
+ 
+Notes: The Data Source Code you create here (e.g., WSU_CDM_mccaw) will be used to create the custom scope in #3. The Data Source Label will be mapped to the out-of-the-box dc.source field.
+When you select OAI as the import protocol, the OAI Details screen will open. Fill in required fields. Connect and edit. Select the set you are interested in for the recreation of this particular pipe.
+ 
+Note: Don’t forget to set the Harvest Start Date to a date before the <datestamp> value of the records. To view individual records, use parameter “verb=ListRecords” and set name, such as:
+https://content.libraries.wsu.edu/oai/oai.php/request?verb=ListRecords&set=rcbutler&metadataPrefix=oai_dc
+
+2B. Normalization Tab
+Map field not present or manipulate metadata in some way
+None needed for now.
+
+2C. Delivery Tab
+Link to Resource
+Use this area to create View It or Get It linking structures.
+If you are linking back to an external resource (such as Special Collections or ArchivesWest), you will most likely use the dc:identifier field to do so. I set this field up as LinkingParameter1.
+ 
+You can edit LinkingParameter1 to use a specific dc:identifier value (matching string) or alter the value (normalization). In this case, the field repeats, but I don’t want to display all three instances in my View It area. I used a regular expression to select the dc:identifier that started with http:// or https://.
+ 
+Use source tag = Matching string using a regular expression
+Matching string = ^(?:http(s)?:\/\/).*
+Normalization source tag = No normalization 
+
+Add $$LinkingParameter1 via the Template option (don’t forget the $$). Update the Link Label to something user-friendly.
+ 
+Save and Run the import profile, check the results to see that the regular expression filter is working.
+ 
+Link to Thumbnail
+Use this area to define URLs for thumbnail images.
+This will be highly specific to your data, but I edited dc:identifier in LinkingParameter2 and dc:identifier in LinkingParameter3 to create a working thumbnail image for our collections.
+
+dc:identifier in LinkingParameter2 to collect the Collection Name
+Use source tag = Matching string using a regular expression
+Matching string = ^(?:http(s)?:\/\/).*
+Normalization source tag = collection\/(.*)\/id
+
+dc:identifier in LinkingParameter3 to collect the Collection ID
+Use source tag = Matching string using a regular expression
+Matching string = ^(?:http(s)?:\/\/).*
+Normalization source tag = id\/([0-9]+)
+
+Combine $$LinkingParameter2 and $$LinkingParameter3 via Template option to create thumbnail URL: https://content.libraries.wsu.edu/digital/api/singleitem/collection/$$LinkingParameter2/id/$$LinkingParameter3/thumbnail
+ 
+3. Create a Custom Local Data Scope
+Discovery > Search Configuration > Search Profiles > Custom Local Data Scopes > Add a Custom Scope
+Fill in the required fields and Add a Condition (under Scope Conditions). Note: The Scope Code you create here will be used to create the Custom Search Profile in #4.
+ 
+Search Index = Inventory: External data source
+Operator = Equals
+Value = Data Source Code you created in #2
+ 
+4. Create a Custom Search Profile
+Now that you have scopes created, you can build this out any way you like, but creating a new search profile made the most sense to me.
+Discovery > Search Configuration > Search Profiles > Search Profiles
+Add a Search Profile
+ 
+Scope Type = Custom (Local data)
+Custom Scope = Scope Codes you created in #3.
+ 
+5. Add the Search Profile to a Search Profile Slot
+Discovery > Display Configuration > Configure Views > Edit > Search Profile Slot > Edit
+Activate Search Profile created in #4
+ 
+If desired, reposition the Search Profile to appear in a different ordering.
+ 
+6. Test your external data sources
+Use an appropriate keyword within your new Search Profile to bring back results.
+ 
+Does it bring back the correct number of records? Do they show the correct metadata? Do they have thumbnails?
+ 
+7. Change Resource Types
+Configuration > Discovery > Loading External Data Sources > Dublin Core Type to Discovery Type Mapping
+Review the dc:type values found in your records.
+ 
+Map new entries for the dc:type values found in your records.
+ 
+Return to your Discovery Import Profile and Reload the records. Test that the resource type changed accordingly. 
+Links to Documentation
+
+Go VE: Replacing Pipes in Primo with Import Profiles in Primo VE
+https://knowledge.exlibrisgroup.com/Primo/Product_Documentation/Go_VE/Step_3%3A_Configuration/050Go_VE%3A_Replacing_Pipes_in_Primo_with_Import_Profiles_in_Primo_VE
+
+Configuring Import Profiles for Primo VE
+https://knowledge.exlibrisgroup.com/Primo/Product_Documentation/020Primo_VE/Primo_VE_(English)/100Loading_Records_from_External_Sources_into_Primo_VE/Configuring_Import_Profiles_for_Primo_VE
+
+Configuring Normalization Rules for External Resources (Primo VE)
+https://knowledge.exlibrisgroup.com/Primo/Product_Documentation/020Primo_VE/Primo_VE_(English)/100Loading_Records_from_External_Sources_into_Primo_VE/Configuring_Normalization_Rules_for_External_Resources_(Primo_VE)
+
