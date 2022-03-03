@@ -149,7 +149,7 @@ rule "copy url for full-text indexing"
 when
 exist "/ead/eadheader/eadid/@url"
 then
-copy "/ead/eadheader/eadid/@url" to "discovery"."local33"
+copy "/ead/eadheader/eadid/@url" to "discovery"."local13"
 end
 
 rule "copy description7"
