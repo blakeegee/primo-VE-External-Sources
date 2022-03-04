@@ -21,9 +21,9 @@ end
 
 rule "copy extent (Quantity)"
 when
-exist "//ead/archdesc/did/physdesc/extent[@altrender='materialtype spaceoccupied']"
+exist "//ead/archdesc/did/physdesc/extent[@encodinganalog='300$a']"
 then
-copy "concat (//ead/archdesc/did/physdesc/extent[@altrender='materialtype spaceoccupied'],', ',//ead/archdesc/did/physdesc/extent[@altrender='carrier'])" to "discovery"."local2"
+copy "concat (//ead/archdesc/did/physdesc/extent[@encodinganalog='300$a'][1],', ',//ead/archdesc/did/physdesc/extent[@encodinganalog='300$a'][2])" to "discovery"."local2"
 end
 
 rule "copy cage id (Collection Number)"
@@ -140,63 +140,112 @@ end
 
 rule "Copy link to resource"
 when
-exist "/ead/eadheader/eadid/@url"
+exist "//ead/eadheader/eadid/@url"
 then
-copy "/ead/eadheader/eadid/@url" to "dc"."identifier"("dcterms:URI")
+copy "//ead/eadheader/eadid/@url" to "dc"."identifier"("dcterms:URI")
 end
 
 rule "copy url for full-text indexing (URL for Full-text Indexing)"
 when
-exist "/ead/eadheader/eadid/@url"
+exist "//ead/eadheader/eadid/@identifier"
 then
-copy "/ead/eadheader/eadid/@url" to "discovery"."local13"
+copy "concat('https://archiveswest.orbiscascade.org/finding-aid.php?ark=','',//ead/eadheader/eadid/@identifier)" to "discovery"."local13"
 end
 
 rule "copy description7"
 when
-exist "//ead/archdesc/dsc/c[7]"
+exist "//ead/archdesc/dsc/c01[7]"
 then
-copy all "concat('Box: ',//ead/archdesc/dsc/c[7]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c[7]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c[7]/did/unittitle)"("; ") to "dc"."description"
+copy all "concat('Box: ',//ead/archdesc/dsc/c01[7]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01[7]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01[7]/did/unittitle)"("; ") to "dc"."description"
 end
 
 rule "copy description6"
 when
-exist "//ead/archdesc/dsc/c[6]"
+exist "//ead/archdesc/dsc/c01[6]"
 then
-copy all "concat('Box: ',//ead/archdesc/dsc/c[6]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c[6]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c[6]/did/unittitle)"("; ") to "dc"."description"
+copy all "concat('Box: ',//ead/archdesc/dsc/c01[6]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01[6]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01[6]/did/unittitle)"("; ") to "dc"."description"
 end
 
 rule "copy description5"
 when
-exist "//ead/archdesc/dsc/c[5]"
+exist "//ead/archdesc/dsc/c01[5]"
 then
-copy all "concat('Box: ',//ead/archdesc/dsc/c[5]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c[5]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c[5]/did/unittitle)"("; ") to "dc"."description"
+copy all "concat('Box: ',//ead/archdesc/dsc/c01[5]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01[5]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01[5]/did/unittitle)"("; ") to "dc"."description"
 end
 
 rule "copy description4"
 when
-exist "//ead/archdesc/dsc/c[4]"
+exist "//ead/archdesc/dsc/c01[4]"
 then
-copy all "concat('Box: ',//ead/archdesc/dsc/c[4]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c[4]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c[4]/did/unittitle)"("; ") to "dc"."description"
+copy all "concat('Box: ',//ead/archdesc/dsc/c01[4]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01[4]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01[4]/did/unittitle)"("; ") to "dc"."description"
 end
 
 rule "copy description3"
 when
-exist "//ead/archdesc/dsc/c[3]"
+exist "//ead/archdesc/dsc/c01[3]"
 then
-copy all "concat('Box: ',//ead/archdesc/dsc/c[3]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c[3]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c[3]/did/unittitle)"("; ") to "dc"."description"
+copy all "concat('Box: ',//ead/archdesc/dsc/c01[3]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01[3]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01[3]/did/unittitle)"("; ") to "dc"."description"
 end
 
 rule "copy description2"
 when
-exist "//ead/archdesc/dsc/c[2]"
+exist "//ead/archdesc/dsc/c01[2]"
 then
-copy all "concat('Box: ',//ead/archdesc/dsc/c[2]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c[2]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c[2]/did/unittitle)"("; ") to "dc"."description"
+copy all "concat('Box: ',//ead/archdesc/dsc/c01[2]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01[2]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01[2]/did/unittitle)"("; ") to "dc"."description"
 end
 
 rule "copy description1"
 when
-exist "//ead/archdesc/dsc/c[1]"
+exist "//ead/archdesc/dsc/c01[1]"
 then
-copy all "concat('Box: ',//ead/archdesc/dsc/c[1]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c[1]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c[1]/did/unittitle)"("; ") to "dc"."description"
+copy all "concat('Box: ',//ead/archdesc/dsc/c01[1]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01[1]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01[1]/did/unittitle)"("; ") to "dc"."description"
+end
+
+rule "copy description series7"
+when
+exist "//ead/archdesc/dsc/c01/c02[7]"
+then
+copy all "concat('Box: ',//ead/archdesc/dsc/c01/c02[7]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01/c02[7]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01/c02[7]/did/unittitle)"("; ") to "dc"."description"
+end
+
+rule "copy description series6"
+when
+exist "//ead/archdesc/dsc/c01/c02[6]"
+then
+copy all "concat('Box: ',//ead/archdesc/dsc/c01/c02[6]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01/c02[6]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01/c02[6]/did/unittitle)"("; ") to "dc"."description"
+end
+
+rule "copy description series5"
+when
+exist "//ead/archdesc/dsc/c01/c02[5]"
+then
+copy all "concat('Box: ',//ead/archdesc/dsc/c01/c02[5]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01/c02[5]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01/c02[5]/did/unittitle)"("; ") to "dc"."description"
+end
+
+rule "copy description series4"
+when
+exist "//ead/archdesc/dsc/c01/c02[4]"
+then
+copy all "concat('Box: ',//ead/archdesc/dsc/c01/c02[4]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01/c02[4]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01/c02[4]/did/unittitle)"("; ") to "dc"."description"
+end
+
+rule "copy description series3"
+when
+exist "//ead/archdesc/dsc/c01/c02[3]"
+then
+copy all "concat('Box: ',//ead/archdesc/dsc/c01/c02[3]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01/c02[3]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01/c02[3]/did/unittitle)"("; ") to "dc"."description"
+end
+
+rule "copy description series2"
+when
+exist "//ead/archdesc/dsc/c01/c02[2]"
+then
+copy all "concat('Box: ',//ead/archdesc/dsc/c01/c02[2]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01/c02[2]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01/c02[2]/did/unittitle)"("; ") to "dc"."description"
+end
+
+rule "copy description series1"
+when
+exist "//ead/archdesc/dsc/c01/c02[1]"
+then
+copy all "concat('Box: ',//ead/archdesc/dsc/c01/c02[1]/did/container[@type='box'],' Folder: ',//ead/archdesc/dsc/c01/c02[1]/did/container[@type='folder'],' -- ',//ead/archdesc/dsc/c01/c02[1]/did/unittitle)"("; ") to "dc"."description"
 end
