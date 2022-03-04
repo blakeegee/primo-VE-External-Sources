@@ -12,35 +12,35 @@ then
 copy "//ead/archdesc/did/origination/persname" to "dc"."creator"
 end
 
-rule "copy coverage date"
+rule "copy coverage date (Dates)"
 when
 exist "//ead/archdesc/did/unitdate"
 then
 copy "//ead/archdesc/did/unitdate" to "discovery"."local1"
 end
 
-rule "copy extent"
+rule "copy extent (Quantity)"
 when
 exist "//ead/archdesc/did/physdesc/extent[@altrender='materialtype spaceoccupied']"
 then
 copy "concat (//ead/archdesc/did/physdesc/extent[@altrender='materialtype spaceoccupied'],', ',//ead/archdesc/did/physdesc/extent[@altrender='carrier'])" to "discovery"."local2"
 end
 
-rule "copy cage id"
+rule "copy cage id (Collection Number)"
 when
 exist "//ead/archdesc/did/unitid"
 then
 copy "//ead/archdesc/did/unitid" to "discovery"."local3"
 end
 
-rule "copy abstract"
+rule "copy abstract (Summary)"
 when
 exist "//ead/archdesc/did/abstract"
 then
 copy "//ead/archdesc/did/abstract" to "discovery"."local4"
 end
 
-rule "copy repo"
+rule "copy repo (Repository Information)"
 when
 exist "//ead/archdesc/did/repository/corpname"
 then
@@ -61,7 +61,7 @@ then
 copy "//ead/archdesc/did/langmaterial/language" to "dc"."language"
 end
 
-rule "copy bioghist"
+rule "copy bioghist (Biographical Note)"
 when
 exist "//ead/archdesc/bioghist/p"
 then
@@ -82,35 +82,35 @@ then
 copy "//ead/archdesc/userestrict/p" to "dc"."rights"
 end
 
-rule "copy preferred citation"
+rule "copy preferred citation (Preferred Citation)"
 when
 exist "//ead/archdesc/prefercite/p"
 then
 copy "//ead/archdesc/prefercite/p" to "discovery"."local7"
 end
 
-rule "copy arrangement"
+rule "copy arrangement (Arrangement)"
 when
 exist "//ead/archdesc/arrangement/p"
 then
 copy "//ead/archdesc/arrangement/p" to "discovery"."local8"
 end
 
-rule "copy acquisition info"
+rule "copy acquisition info (Acquisition Information)"
 when
 exist "//ead/archdesc/acqinfo/p"
 then
 copy "//ead/archdesc/acqinfo/p" to "discovery"."local9"
 end
 
-rule "copy processing note"
+rule "copy processing note (Processing Note)"
 when
 exist "//ead/archdesc/processinfo/p"
 then
 copy "//ead/archdesc/processinfo/p" to "discovery"."local10"
 end
 
-rule "copy separated materials"
+rule "copy separated materials (Separated Materials)"
 when
 exist "//ead/archdesc/separatedmaterial/p"
 then
@@ -124,7 +124,7 @@ then
 copy "//ead/archdesc/controlaccess/subject" to "dc"."subject"
 end
 
-rule "copy personal names"
+rule "copy personal names (Personal Names)"
 when
 exist "//ead/archdesc/controlaccess/persname"
 then
@@ -145,7 +145,7 @@ then
 copy "/ead/eadheader/eadid/@url" to "dc"."identifier"("dcterms:URI")
 end
 
-rule "copy url for full-text indexing"
+rule "copy url for full-text indexing (URL for Full-text Indexing)"
 when
 exist "/ead/eadheader/eadid/@url"
 then
